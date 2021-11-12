@@ -1,0 +1,20 @@
+.admin__block {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center
+}
+.admin__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+    border: 1px solid rgb(53, 112, 53);
+    width: 20rem;
+    height: 4rem;
+    cursor: pointer;
+}
+.admin__btn:hover {
+    background: #198754;
+    color: #fff;
+}

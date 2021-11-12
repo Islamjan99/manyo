@@ -1,0 +1,205 @@
+* {
+    list-style: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.admin {
+    color: #fff;
+    text-decoration: none;
+}
+.header {
+    background: #060606;
+    height: 2.5rem;
+}
+.f {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+.left p  {
+    font-size: 11px;
+    
+    font-weight: 400;
+    color: #fff;
+}
+.kurs {
+    padding: 5px;
+}
+.log_off {
+    border: none;
+    background: none;
+    color: #fff;
+}
+.voy {
+    border: none;
+    background: none;
+    color: #fff;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    padding: 0 ;
+}
+.left p { 
+    display: flex;
+    font-size: 1rem;
+    margin-left: 5.5rem;
+}
+.right {
+    display: flex;
+    color: #fff;
+    font-size: 11px;
+}
+.right button {
+    display: flex;
+    color: #fff;
+    font-size: 11px;
+}
+.right li{
+    padding: 8px;
+    font-size: 11px;
+}
+.right img {
+    margin-top: 8px;
+    width: 15px;
+    height: 15px;
+
+}
+.heart {
+    width: 40px;
+    height: 40px;
+    margin: .2rem  1.1rem 0 .8rem ;
+    background: url(../../imgContainer/img/pngegg.png);
+    -moz-background-size: 100%; 
+    -webkit-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    display: inline-block;
+    position: relative;
+}
+.heart:hover::after {
+    content: "Избранное";
+    position: absolute;
+    top: 2.3rem;
+    right: -80%;
+    z-index: 5;
+    background: none;
+    font-size: 1rem;
+    padding: 5px 10px;
+}
+.line {
+    background: #FDEBEA;
+}
+.line p {
+    color: #060606;
+    text-align: center;
+    padding: 4px;
+    font-style: italic;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.a {
+    text-decoration: none;
+    background: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+.heading { 
+    padding-top: 3rem;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 1200px;
+}
+.heading div {
+    display: flex;
+}
+.heading button {
+    background: none;
+    border: none;
+}
+.i {
+    width: 31px;
+    height: 31px;
+    margin-top: .2rem;
+    margin-right: 10px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+.inp__block {
+    width: 33px;
+    height: 33px;
+    margin: .2rem  1.1rem 0 .8rem ;
+    cursor: pointer;
+    background: url(../../imgContainer/img/istockphoto-1151843591-612x612.jpg);
+    -moz-background-size: 100%; 
+    -webkit-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    display: inline-block;
+    position: relative;
+    
+}
+.inp__block:hover::after {
+    content: "Поиск";
+    position: absolute;
+    top: 2rem;
+    right: -60%;
+    z-index: 5;
+    background: none;
+    font-size: 1rem;
+    padding: 5px 10px;
+}
+.name {
+    font-size: 50px;
+    color: #822C41;
+}
+.acc {
+    width: 50px;
+    height: 50px;
+}
+.header__right {
+    display: flex;
+    align-items: center;
+}
+.search__panel {
+    display: flex;
+}
+.basket__img {
+    width: 33px;
+    height: 33px;
+    margin: .2rem  1.1rem 0 .8rem ;
+    background: url(../../assets/1492532808-5-shopping-bag_83223.png);
+    -moz-background-size: 100%; 
+    -webkit-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    display: inline-block;
+    position: relative;
+}
+.basket__img:hover::after {
+    content: "Корзина";
+    position: absolute;
+    top: 2.3rem;
+    right: -40%;
+    z-index: 1;
+    background: none;
+    font-size: 1rem;
+    padding: 5px 10p
+}
+.basket__count {
+    font-size: 1.3rem;
+    position: absolute;
+    margin: .3rem 0 0 .5rem ;
+}
+
+
+@media all and (max-width:1025) {
+    
+}

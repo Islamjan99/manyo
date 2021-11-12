@@ -1,0 +1,36 @@
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+.main{
+    display: flex;
+    justify-content: space-evenly
+}
+.main img {
+    width: 90%;
+    height: 500px;
+    border-radius: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: center;
+}
+.block {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    
+}
+.itemImg {
+    border-radius: 10%;
+    width: 270px;
+    height: 270px;
+}
+.btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.hea {
+    margin-left: -5px;
+    width: 15px;
+}
