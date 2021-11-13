@@ -1,0 +1,83 @@
+.container {
+    width: 1100px;
+    margin: 0 auto;
+}
+.block__item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.item {
+    flex-wrap: wrap;
+    margin: 1rem 2rem;
+}
+.block__name {
+    display: flex;
+    justify-content: space-between;
+}
+.block__rating {
+    margin-top: .2rem;
+    display: flex;
+}
+.rating__img {
+    margin-top: .2rem;
+    margin-left: .2rem;
+    width: 1.1rem;
+    height: 1.1rem;
+}
+.block__price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1rem;
+    margin-top: 1rem;
+}
+.counter {
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+
+}
+
+.count {
+    height: 1rem;
+    margin-bottom: .6rem;
+}
+.coun {
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin: 0 .4rem 0 0;
+}
+.coun:last-child {
+    margin: 0  0 0 .4rem;
+}
+.coun:active {
+    background: none;
+    border: none;
+}
+.remove__btn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.remove__btn button {
+    background: none;
+    border: 1px solid;
+    display: flex;
+    justify-content: flex-end;
+    padding: .1rem .2rem;
+    margin: .2rem 0;
+}
+.fil__price {
+    margin: 1rem 2rem 0 0;
+    
+}
+.fil__one { 
+    display: flex;
+    justify-content: flex-end;
+}
+.fil__two {
+    display: flex;
+    justify-content: flex-end;
+}

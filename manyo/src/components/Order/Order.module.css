@@ -1,0 +1,60 @@
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+.order__block {
+    display: flex;
+    justify-content: space-around;
+}
+.h3 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.h4{
+    margin-top: 1rem;
+}
+.line__info {
+    margin-bottom: .8rem;
+}
+.order__form {
+    width: 32rem;
+    display: flex;
+    justify-content: space-between;
+}
+.inp__checkbox {
+    margin-left: .2rem;
+}
+.inp {
+    width: 12rem;
+    margin: 0 0 1rem 0;
+}
+.delivery__form {
+    width: 15rem;
+    margin: 0 0 1rem 0;
+}
+.block__prod {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #808080;
+}
+.line {
+    border-bottom: 1px solid #808080 ;
+}
+
+.inp__address {
+    display: flex;
+    flex-direction: column;
+    width: 12rem;
+}
+.line__info {
+    width: 3rem;
+    margin: .5rem 0 0  0;
+}
+.p {
+    display: flex;
+    margin: 1rem 0 1rem 0 ;
+}
+.i {
+    margin: .5rem;
+}

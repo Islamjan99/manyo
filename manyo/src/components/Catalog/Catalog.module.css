@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
+.container {
+    max-width: 75rem;
+    margin: 0 auto;
+    margin-top: 1rem;
+}
+.block {
+    display: flex;
+    justify-content: center;
+}
+.kat { 
+    width: 15rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px ;
+    border: 1px solid rgb(170, 170, 170);
+    height: 3.5rem;
+}
+.typeBar {
+    display: flex;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center;
+}
+
+.col {
+    border: 1px solid rgb(170, 170, 170);
+    margin: 0.3rem;
+    padding: 0.3rem;
+    width: 15rem;
+    height: 3.5rem;
+    cursor: pointer;
+}
+@media all and (max-width:1025) {
+    .st {
+        background: blue;
+    }
+}
