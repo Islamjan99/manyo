@@ -30,20 +30,17 @@ const Catalog = observer(() => {
             <div  className={style.typeBar}>
                 {device.types.map(type =>
                     <div
-                        style={{cursor: 'pointer'}}
                         defaultValue={type.id === device.selectedType.id}
                         onClick={() => device.setSelectedType(type)}
                         key={type.id}
-                >
+                    >
                         <div className={style.col}>
-                        {type.name}
-
+                            {type.name}
                         </div>
-                    
-                </div>
-            )}
-            <DeviceList />
-            <Pagin />
+                    </div>
+                )}
+                <DeviceList />
+                <Pagin />
            
             </div>
         </div>

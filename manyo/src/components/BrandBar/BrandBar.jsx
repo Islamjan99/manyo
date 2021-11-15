@@ -20,14 +20,15 @@ const BrandBar = observer(() => {
     return (
         <div className={style.block}>
             {device.brands.map(brand =>
-                <div
-                    style={{cursor:'pointer'}}
-                    onClick={() => device.setSelectedBrand(brand)}
-                    key={brand.id}
-                    className={style.kat}
-                >
-                   <Link to={CATALOG_ROUTE}>{brand.name}</Link>
-                </div>
+                <Link to={CATALOG_ROUTE}>
+                    <div
+                        onClick={() => device.setSelectedBrand(brand)}
+                        key={brand.id}
+                        className={style.kat}
+                    >
+                        {brand.name}
+                    </div>
+                </Link>
             )}
         </div>
     );

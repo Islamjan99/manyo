@@ -17,9 +17,6 @@ const Header = observer(() => {
     const history = useHistory()
 
     useEffect(() => {
-        fetchDevicees().then(data => {
-            device.setDevicees(data.rows)
-        })
         if (localStorage.getItem('token') !== null) {
             user.setUsers()
            }

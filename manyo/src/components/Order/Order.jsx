@@ -75,12 +75,12 @@ export default function Order() {
             <div className={style.order__block}>
                 <div className={style.order__product}>
                     <div>
-                        <h3 className={style.h3}>Подобности заказа</h3>
+                        <h3 className={style.h3}>Подробности заказа</h3>
                         
                     </div>
                     <div>
                         <div>
-                            <p className={style.line}>Название, количество, цена продукта</p>
+                            <p className={style.linen}>Название, количество, цена продукта</p>
                         </div>
                         
                         <div className={style.block__prod}>
@@ -115,7 +115,7 @@ export default function Order() {
                             </div>
                             <p>E-mail</p>
                             <div className={style.order__inp}>
-                                <input className={style.inp} type="email" defaultValue={user.users.email}/>
+                                <input className={style.inp} type="text" defaultValue={user.users.email}/>
                                 <input className={style.inp__checkbox} type="checkbox" onClick={refuse}/>
                             </div>
                             <div>
@@ -169,7 +169,7 @@ export default function Order() {
                                             onChange={e => setEntrance(e.target.value)}
                                             value={entrance} 
                                             type="text" 
-                                            placeholder="Введите подьезд дома"
+                                            placeholder="Введите подьезд квартиры"
                                         />
 
                                         <p className={style.line__info}>Этаж</p>
