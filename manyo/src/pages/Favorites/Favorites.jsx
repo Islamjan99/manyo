@@ -18,7 +18,7 @@ const Favorites = observer(() => {
             setData(JSON.parse(localStorage.getItem('favorites')))
         }
        
-    }, [])
+    }, [ device ])
 
     const getFavorites = () => {
         
@@ -42,7 +42,7 @@ const Favorites = observer(() => {
                         return (
                             <div key={produ.id} className={style.item}>
                                 <div  className="d-flex flex-wrap" style={{width: 200}} border={"light"}  onClick={() => history.push(DEVICE_ROUTE + '/' + produ.id + '/' )}>
-                                    <img className={style.item_img} style={{cursor: "pointer"}} width={200} height={200} src={process.env.REACT_APP_API_URL + produ.img}/>
+                                    <img className={style.item_img} style={{cursor: "pointer"}} width={200} height={200} src={process.env.REACT_APP_API_URL + produ.img} alt=""/>
                                     <div className="text-black-50 mt-1 d-flex align-items-center">
                                         <div style={{cursor: "pointer"}}></div>
                                     </div>

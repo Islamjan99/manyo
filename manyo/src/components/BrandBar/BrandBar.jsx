@@ -4,18 +4,14 @@ import {Context} from "../../index";
 import style from './BrandBar.module.css'
 import { Link } from 'react-router-dom'
 import { CATALOG_ROUTE } from '../../Utils/Consts';
-import { fetchBrands, fetchDevices } from '../../Http/DeviceAPI';
+import { fetchBrands } from '../../Http/DeviceAPI';
 
 const BrandBar = observer(() => {
     const { device } = useContext(Context)
 
     useEffect(() => {
         fetchBrands().then(data => device.setBrands(data))
-        fetchDevices(device.selectedType.id, device.selectedBrand.id, device.page, 3).then(data => {
-            device.setDevices(data.rows)
-            device.setTotalCount(data.count)
-        })
-    }, [device, device.page, device.selectedType, device.selectedBrand])
+    }, [device])
 
     return (
         <div className={style.block}>

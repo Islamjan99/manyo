@@ -52,10 +52,14 @@ const TypeBrand = sequelize.define('type_brand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
-const HistoryOrder = sequelize.define('History_order', {
+const History = sequelize.define('History', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     info: {type: DataTypes.STRING, allowNull: false },
-    description: {type: DataTypes.STRING, allowNull: false },
+    date: {type: DataTypes.STRING, allowNull: false },
+    userName: {type: DataTypes.STRING, allowNull: false },
+    userEmail: {type: DataTypes.STRING, allowNull: false },
+    userAddress: {type: DataTypes.STRING, allowNull: false },
+    userPhone: {type: DataTypes.INTEGER, allowNull: false },
 })
 
 User.hasOne(Basket)
@@ -64,8 +68,8 @@ Basket.belongsTo(User)
 User.hasMany(Rating)
 Rating.belongsTo(User)
 
-User.hasMany(HistoryOrder)
-HistoryOrder.belongsTo(User)
+User.hasMany(History)
+History.belongsTo(User)
 
 Basket.hasMany(BasketDevice)
 BasketDevice.belongsTo(Basket)
@@ -98,5 +102,5 @@ module.exports = {
     Rating,
     TypeBrand,
     DeviceInfo,
-    HistoryOrder
+    History
 }

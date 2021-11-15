@@ -6,18 +6,19 @@ import star from '../../assets/star.png'
 import {useHistory} from "react-router-dom"
 import { DEVICE_ROUTE, SENDING__AN_ORDER_ROUTER } from '../../Utils/Consts';
 import { observer } from 'mobx-react-lite'
+import { getOrder } from '../../Http/DeviceAPI';
 
 const Basket = observer(() => {
     const history = useHistory()
-    const [ lgShow, setLgShow ] = useState(false);
     const { device } = useContext(Context)
     const { user } = useContext(Context)
 
     useEffect(() => {
-       if (localStorage.getItem('token') !== null) {
-        user.setUsers()
-       }
-       if (device.basket !== null) {
+        getOrder().then(data => device.setOrderHistory(data))
+        if (localStorage.getItem('token') !== null) {
+            user.setUsers()
+        }
+        if (device.basket !== null) {
         device.basket.map(item => data.push(item))
         log()
         }
@@ -42,6 +43,7 @@ const Basket = observer(() => {
                 device.basketIncrement(produ)
                     log()
                 }
+                return item
         })
         
     }
@@ -51,6 +53,7 @@ const Basket = observer(() => {
                 device.basketDecrement(produ)
                     log()
                 }
+                return item
         })
     }
     const order = () => {

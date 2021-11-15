@@ -16,18 +16,16 @@ const Devicepage  = observer(() => {
     const [ addGood, setAddGood ] = useState(false)
     const [ devicce, setDevicce] = useState({info: []})
     const [ sum, setSum] = useState(0)
-    const [ coun, setCoun ] = useState()
     const { id } = useParams()
         
     useEffect(() => {
         fetchOneDevice(id).then(data => setDevicce(data))
         fetchOneDevice(id).then(data => setSum(data.price))
-        fetchOneDevice(id).then(data => setCoun(data))
         fetchDevicees().then(data => {
             device.setDevicees(data.rows)
         })
         test()
-    }, [])
+    })
 
     const [ roles, setRoles ] = useState()
     const [ role, setRole ] = useState()
@@ -72,6 +70,7 @@ const Devicepage  = observer(() => {
                 } else {
                     itemID = false
                 }
+                return item
             })
         }
     

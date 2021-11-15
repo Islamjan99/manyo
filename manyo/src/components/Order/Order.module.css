@@ -14,9 +14,6 @@
 .h4{
     margin-top: 1rem;
 }
-.line__info {
-    margin-bottom: .8rem;
-}
 .order__form {
     width: 32rem;
     display: flex;
@@ -49,8 +46,7 @@
     width: 12rem;
 }
 .line__info {
-    width: 3rem;
-    margin: .5rem 0 0  0;
+    margin: .35rem 0 0 0;
 }
 .p {
     display: flex;

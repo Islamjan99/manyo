@@ -23,9 +23,6 @@
     align-items: center !important;
     justify-content: center;
 }
-.typeBar div:hover {
-    color: #0A58CA;
-}
 .col {
     display: flex;
     align-items: center;
@@ -36,6 +33,9 @@
     width: 15rem;
     height: 3.5rem;
     cursor: pointer;
+}
+.col:hover {
+    color: #2323da;
 }
 @media all and (max-width:1025) {
     .st {

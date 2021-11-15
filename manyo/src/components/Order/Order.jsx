@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../..'
 import style from './Order.module.css'
-import { nanoid } from 'nanoid'
+import { getOrder } from '../../Http/DeviceAPI'
 
 export default function Order() {
     const { device } = useContext(Context)
     const { user } = useContext(Context)
     const [ agr, setAgr ] = useState(false)
     const [ ref, setRef ] = useState(false)
-    const size = 8
-    let id = nanoid(size)
+
     // Адрес
     const [ town, setTown ] = useState()
     const [ street, setStreet] = useState()
@@ -21,6 +20,8 @@ export default function Order() {
 
     let product = []
 
+    // createHistoryOrder
+
     const finalPrice = []
     const [ b, setB] = useState()
 
@@ -28,11 +29,13 @@ export default function Order() {
     let x = 0
 
     useEffect(() => {
-        finPrice()
         product = []
-
+        getOrder().then(data => device.setOrderHistory(data))
+        finPrice()
+    
         device.basket.map(item => {
             product.push(item)
+            return item
         })
     })
 
@@ -52,26 +55,32 @@ export default function Order() {
         
         a.map((number) => setB(number))
     }
-    const log2 = () => {
-        console.log(user.users.email);
-        console.log(`ID пользователя: ${user.users.id}. Имя: ${user.users.name}. Фамилия: ${user.users.lastName}. Тел: ${user.users.phone}`);
-        console.log(product);
-    }
+    // const log2 = () => {
+    //     console.log(user.users.email);
+    //     console.log(`ID пользователя: ${user.users.id}. Имя: ${user.users.name}. Фамилия: ${user.users.lastName}. Тел: ${user.users.phone}`);
+    //     console.log(product);
+    // }
     const log = () => {
-        console.log(`${town}, ${street}, ${houseNumber}, ${entrance}, ${floor}, ${apartmentNumber}` , id)
+        // console.log(`${town}, ${street}, ${houseNumber}, ${entrance}, ${floor}, ${apartmentNumber}` , id)
+    }
+
+    const get = () => {
+        let date = new Date();
+        console.log(`Год: ${date.getFullYear()}, Месяц: ${date.getMonth()}, День: ${date.getDate()}, Время: ${date.getHours()}:${date.getMinutes()}`);
     }
 
     // дата и время
 
-    let date = new Date();
-    console.log(`Год: ${date.getFullYear()}, Месяц: ${date.getMonth()}, День: ${date.getDate()}, Время: ${date.getHours()}:${date.getMinutes()}`);
+    
+    
     return (
         <div className={style.container}>
             <center>
-                <h2>Подтверждение заказа</h2>
+                <h2>Подтверждение заказа №: {device.OrderHistory.length + 1}</h2>
                 <h3>Пожауйста проверти данные</h3>
             </center>
             <button onClick={log}>log</button>
+            <button onClick={get}>get</button>
             <div className={style.order__block}>
                 <div className={style.order__product}>
                     <div>

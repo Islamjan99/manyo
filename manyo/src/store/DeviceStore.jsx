@@ -12,10 +12,9 @@ export default class DeviceStore {
         this._page = 1
         this._totalCount = 0
         this._limit = 9
-        this._idProduct = []
         this._basket = []
-        this._basketClone = []
         this._favorites = []
+        this._orderHistory = []
         
         makeAutoObservable(this)
     }
@@ -48,25 +47,13 @@ export default class DeviceStore {
     setTotalCount(count) {
         this._totalCount = count
     }
-    addID(idProduct) {
-        this._idProduct.push(idProduct)
-            
-    }
-    idRemove(idProduct) {
-        this._idProduct = []
-            
-    }
-    basketRemove(idProduct) {
+    basketRemove(id) {
         this._basket = []
-            
     }
     addBasket(basket) {
         this._basket.push(basket)
-        this._basketClone.push(basket)
         this._basket.map(item => item.count = 1)
-        this._basket.map(item => item.prices = item.price)
-        this._basketClone.map(i => i.count = 1)
-            
+        this._basket.map(item => item.prices = item.price)           
     }
     basketIncrement (produ) {
         this._basket.map(item  => {
@@ -74,7 +61,6 @@ export default class DeviceStore {
                 if (item.count <= 4) {
                     item.price += item.prices
                     item.count ++
-                    
                 }
             }
             return this._basket
@@ -87,7 +73,6 @@ export default class DeviceStore {
                     item.price -= item.prices
                     item.count --
                 }
-                
             }
             return this._basket
         });
@@ -99,6 +84,9 @@ export default class DeviceStore {
         if (localStorage.getItem('favorites') != null ) {
             this._favorites.push(JSON.parse(localStorage.getItem('favorites')))
         }
+    }
+    setOrderHistory(data) {
+        this._orderHistory = data
     }
     get types () {
        return this._types
@@ -141,5 +129,8 @@ export default class DeviceStore {
     }
     get basketClone() {
         return this._basketClone
+    }
+    get OrderHistory() {
+        return this._orderHistory
     }
 }
