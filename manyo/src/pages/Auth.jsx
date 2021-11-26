@@ -31,11 +31,11 @@ const Auth = observer(() => {
             user.setUser(user)
             user.setIsAuth(true)
             history.push(CATALOG_ROUTE)
-            console.log(data);
+
         } catch (e) {
             alert(e.response.data.message)
         }
-        
+        document.location.reload()
     }
 
 

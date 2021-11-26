@@ -5,7 +5,6 @@ import { Context } from '../../index'
 import DeviceList from '../DeviceList/DeviceList'
 import { fetchDevices, fetchTypes } from '../../Http/DeviceAPI'
 import Pagin from '../Pagin'
-
 const Catalog = observer(() => {
     const { device } = useContext(Context)
 

@@ -70,19 +70,20 @@ const DeviceItem = ({ device, addFavorites, removeLocalStorage, addBasket }) => 
                         <div className={style.item_name} onClick={() => history.push(DEVICE_ROUTE + '/' + device.id )}>{device.name}</div>
                         <div>   {
                                     likes 
-                                    ? <button 
+                                    ?
+                                    <img 
+                                        onClick={() => removeLocal(device)} 
                                         className={style.favorites} 
-                                        key={device.id}
-                                        onClick={() => removeLocal(device)}
-                                      >
-                                            <img className={style.favorites} src={hardLike} alt="" /> 
-                                      </button>
-                                    : <button 
+                                        src={hardLike} alt="" 
+                                    /> 
+
+                                    :
+                                    <img 
+                                        onClick={() => localFavorites(device)}
                                         className={style.favorites} 
-                                        key={device.id} onClick={() => localFavorites(device)}
-                                      >
-                                        <img className={style.favorites} src={hard} alt="" />
-                                      </button>
+                                        src={hard} alt="" 
+                                    />
+
                                 }
                         </div>
                         <div className={style.device__rating}>

@@ -198,10 +198,12 @@
 .basket__count {
     font-size: 1.3rem;
     position: absolute;
-    margin: .3rem 0 0 .5rem ;
+    margin: .3rem 0 0 .6rem ;
 }
 
 
-@media all and (max-width:1025) {
-    
+@media all and (max-width:1026) {
+    .heading {
+        width: 900px;
+    }
 }

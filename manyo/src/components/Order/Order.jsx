@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../..'
 import style from './Order.module.css'
-import { getOrder } from '../../Http/DeviceAPI'
+import { createHistoryOrder, getOrder } from '../../Http/DeviceAPI'
+import axios from 'axios'
 
 export default function Order() {
     const { device } = useContext(Context)
     const { user } = useContext(Context)
     const [ agr, setAgr ] = useState(false)
-    const [ ref, setRef ] = useState(false)
+    const [ check, setCheck ] = useState(false)
+    const [ handleChange, setHandleChange ] = useState(false)
+    const [ j, setJ ] = useState([])
 
     // Адрес
     const [ town, setTown ] = useState()
@@ -17,9 +20,12 @@ export default function Order() {
     const [ floor, setFloor ] = useState()
     const [ apartmentNumber, setApartmentNumber ] = useState()
     // 
+    const [ name, setName ] = useState(user.users.name)
+    const [ phone, setPhone ] = useState(user.users.phone)
+    const [ email, setEmail ] = useState(user.users.email)
 
     let product = []
-
+    let createAddress = {}
     // createHistoryOrder
 
     const finalPrice = []
@@ -28,24 +34,40 @@ export default function Order() {
     let a = []
     let x = 0
 
+    let date = new Date();
+    let AddDate = null
+    let month = date.getMonth()
+    let hours = date.getHours()
+    let minutes = date.getMinutes()
+    
     useEffect(() => {
-        product = []
+        AddDate = `День: ${date.getDate()} Месяц: ${month +=1} год: ${date.getFullYear()} Время: ${hours}:${minutes}`
         getOrder().then(data => device.setOrderHistory(data))
         finPrice()
-    
-        device.basket.map(item => {
-            product.push(item)
-            return item
-        })
     })
 
-    const agree = () => {
-        setAgr(true)
-        setRef(true)
+    const saveAddress = () => {
+        createAddress = {
+            'Город': `${town}`,
+            'Улица': `${street}`,
+            'Дом': `${houseNumber}`,
+            'Подьезд': `${entrance}`,
+            'Этаж': `${floor}`,
+            'Квартира': `${apartmentNumber}`,
+        }
     }
-    const refuse = () => {
-        setAgr(false)
-        setRef(false)
+
+    const prod = () => {
+        product = []
+        device.basket.map(item => {
+            let tovar = `%0A Продукт: %0A Название: ${item.name}, %0A Цена: ${item.prices}, %0A Количество: ${item.count}`
+            product.push(tovar)
+            return item
+        })
+    }
+
+    const agree = () => {
+        setAgr(!agr)
     }
 
     const finPrice = () => {
@@ -55,23 +77,46 @@ export default function Order() {
         
         a.map((number) => setB(number))
     }
-    // const log2 = () => {
-    //     console.log(user.users.email);
-    //     console.log(`ID пользователя: ${user.users.id}. Имя: ${user.users.name}. Фамилия: ${user.users.lastName}. Тел: ${user.users.phone}`);
-    //     console.log(product);
-    // }
-    const log = () => {
-        // console.log(`${town}, ${street}, ${houseNumber}, ${entrance}, ${floor}, ${apartmentNumber}` , id)
+
+    const toggle = () => {
+        setCheck(!check)
     }
 
-    const get = () => {
-        let date = new Date();
-        console.log(`Год: ${date.getFullYear()}, Месяц: ${date.getMonth()}, День: ${date.getDate()}, Время: ${date.getHours()}:${date.getMinutes()}`);
+    const addOrger = () => {
+        prod()
+        saveAddress()
+
+        const formData = new FormData()
+        formData.append('userId', user.users.id)
+        formData.append('info', JSON.stringify(product))
+        formData.append('date',  AddDate)
+        formData.append('userName', name)
+        formData.append('userPhone', phone)
+        formData.append('userEmail', email)
+        
+        formData.append('userAddress', JSON.stringify(createAddress))
+        
+        // createHistoryOrder(formData)
+
+        axios.post(`${process.env.REACT_APP_API_URL_POST}
+                %0A Заказ:  №: ${device.OrderHistory.length + 1}
+                %0A Имя: ${name}
+                %0A Телефон: ${phone}
+                %0A Email: ${email}
+                %0A Заказаный товар: %0A ${JSON.stringify(product)}
+                %0A Доставка: ${handleChange 
+                ? `
+                %0A Город: ${town}
+                %0A Улица: ${houseNumber}
+                %0A дом: ${street}
+                %0A Подъезд: ${entrance}
+                %0A Этаж: ${floor}
+                %0A Квартира: ${apartmentNumber}
+                `:  
+                'Самовывоз'
+            }`)
+        console.log(formData);
     }
-
-    // дата и время
-
-    
     
     return (
         <div className={style.container}>
@@ -79,58 +124,57 @@ export default function Order() {
                 <h2>Подтверждение заказа №: {device.OrderHistory.length + 1}</h2>
                 <h3>Пожауйста проверти данные</h3>
             </center>
-            <button onClick={log}>log</button>
-            <button onClick={get}>get</button>
             <div className={style.order__block}>
-                <div className={style.order__product}>
-                    <div>
-                        <h3 className={style.h3}>Подробности заказа</h3>
-                        
-                    </div>
-                    <div>
-                        <div>
-                            <p className={style.linen}>Название, количество, цена продукта</p>
-                        </div>
-                        
-                        <div className={style.block__prod}>
-                            {device.basket.map(item => 
-                                <> 
-                                    <p>Название: {item.name}</p> 
-                                    <p>Количество: {item.count} шт.</p>
-                                    <p>Цена: {item.prices} KGS 1 ед.</p>
-                                    <div className={style.line}> </div>
-                                </>
-                            )}
-                        </div>
-                        <h4 className={style.h4}>Итоговая сумма заказа </h4>
-                        <h4>{b} KGS</h4>
-                    </div>
-                </div>
 
-                <div className={style.personal__data}>
+                <div className={style.block__data}>
                     <h3 className={style.h3}>Личные данные</h3>
                     <div className={style.order__form}>
                         
                         <div className={style.personal__data}>
                             <p>Имя</p> 
                             <div className={style.order__inp}>
-                                <input className={style.inp} type="text" defaultValue={user.users.name}/> 
-                                <input className={style.inp__checkbox} type="checkbox" onClick={refuse}/>
+                                <input 
+                                    className={style.inp}  
+                                    type="text" 
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
+                                /> 
                             </div>
+
                             <p>Номер телефона</p>
                             <div className={style.order__inp}>
-                                <input className={style.inp} type="number" defaultValue={user.users.phone}/>
-                                <input className={style.inp__checkbox} type="checkbox" onClick={refuse}/>
+                                <input 
+                                    className={style.inp} 
+                                    type="number" 
+                                    value={phone}
+                                    onChange={e => setPhone(e.target.value)}
+                                />
                             </div>
                             <p>E-mail</p>
                             <div className={style.order__inp}>
-                                <input className={style.inp} type="text" defaultValue={user.users.email}/>
-                                <input className={style.inp__checkbox} type="checkbox" onClick={refuse}/>
+                                <input 
+                                    className={style.inp} 
+                                    type="text" 
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                />
                             </div>
                             <div>
-                                Доставка {ref ? <input type="checkbox" onClick={refuse}/> : <input type="checkbox" onClick={agree}/> }
+                                Доставка <input type="checkbox" onClick={agree} onChange={e => setHandleChange(e.target.checked)}/>
 
-                                    <div className={style.p}><span >Согласен получитить <br /> товар без точной даты  </span> <input className={style.i} type="checkbox"/> </div>
+                                    <div className={style.p}>
+                                        <span  className={style.pod}>
+                                            Согласен получитить <br /> 
+                                            товар без точной даты  <br />
+                                            (Для заказа вам надо поставить галочку)
+                                        </span> 
+                                        <input 
+                                            onClick={() => toggle()} 
+                                            className={style.i} 
+                                            type="checkbox"
+                                        /> 
+                                    </div>
+
                                     <p>(Ваш заказ будет подтвержден <br />  менеджером по телефону <br />  в течение суток)</p>
 
                             </div>
@@ -200,18 +244,49 @@ export default function Order() {
                                         />
 
                                         <p className={style.p}>(Стоимость доставки обговорит менеджер)</p>
-                                        <button onClick={log}>подтвертить адрес</button>
+                                        <button onClick={saveAddress}>подтвертить адрес</button>
                                     </div>
                                     : 
                                     ''
                                 }
                             </div>
-                            
-                            
                         </div>
                     </div>
                 </div>
             </div>
+            <div className={style.order__product}>
+                    <div>
+                        <h3 className={style.h3}>Подробности заказа</h3>
+                        
+                    </div>
+                    <div className={style.order__info}>
+                        <div>
+                            <p className={style.linen}>Название, количество, цена продукта</p>
+                        </div>
+                        
+                        <div className={style.block__prod}>
+                            {device.basket.map(item => 
+                                <> 
+                                    <p>Название: {item.name}</p> 
+                                    <p>Количество: {item.count} шт.</p>
+                                    <p>Цена: {item.prices} KGS 1 ед.</p>
+                                    <div className={style.line}> </div>
+                                </>
+                            )}
+                        </div>
+                        <h4 className={style.h4}>Итоговая сумма заказа </h4>
+                        <h4>{b} KGS</h4>
+                        {
+                            check ? 
+                                <div className={style.block__order}>
+                                    <button onClick={() => addOrger()} className={style.btn__order}>заказать</button>
+                                </div>
+                            : 
+                                ""
+                        }
+                        
+                    </div>
+                </div>
         </div>
     )
 }

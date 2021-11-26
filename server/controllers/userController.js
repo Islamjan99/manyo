@@ -1,6 +1,8 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const uuid = require('uuid')
+const path = require('path');
 const {User, Basket} = require('../models/models')
 
 const generateJwt = ( id, email, role, phone, name, lastName ) => {
@@ -13,7 +15,7 @@ const generateJwt = ( id, email, role, phone, name, lastName ) => {
 
 class UserController {
     async registration(req, res, next) {
-        const { email, password, role, phone, name, lastName } = req.body
+        const { email, password, role, phone, name, lastName, percent} = req.body
         if ( !email || !password || !phone || !name || !lastName) {
             return next(ApiError.badRequest('Некорректный email или password'))
         }
@@ -24,7 +26,7 @@ class UserController {
         const hashPassword = await bcrypt.hash(password, 5)
         const user = await User.create({name, lastName, email, role: 'USER', phone, password: hashPassword})
         const basket = await Basket.create({userId: user.id})
-        const token = generateJwt(user.id, user.email, user.role, user.phone, user.name,  user.lastName,)
+        const token = generateJwt(user.id, user.email, user.role, user.phone, user.name,  user.lastName, user.percent)
         return res.json({token})
     }
 
@@ -41,15 +43,51 @@ class UserController {
         const token = generateJwt(user.id, user.email, user.role, user.phone, user.name,  user.lastName,)
         return res.json({token})
     }
+    async addImg(req, res, next) {
+        try {
+            const {email} = req.body
+            const {img} = req.files
+            let fileName = uuid.v4() + ".jpg"
+            img.mv(path.resolve(__dirname, '..', 'avatar', fileName))
+            const personaImg = await User.update(
+                {
+                    img: fileName,
+                  },
+                  {
+                    where: {
+                      email: email,
+                    },
+                  }
+                )
 
+            return res.json(personaImg)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+    }
+
+    async percent(req, res) {
+        const {percent} = req.body
+        const perc = await User.create({percent})
+        return res.json(perc)
+    }
     async check(req, res, next) {
         const token = generateJwt(req.user.id, req.user.email, req.user.role)
         return res.json({token})
     }
 
     async authuser(req, res, next) {
-        const user = req.user
-        return res.json({user})
+        try {
+            const {id} = req.params
+            const user = await User.findOne(
+                {
+                    where: {id},
+                },
+            )
+        return res.json(user)
+        } catch {
+            return next(ApiError.badRequest(e.message))
+        }       
     }
 }
 

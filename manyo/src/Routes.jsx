@@ -3,6 +3,7 @@ import {
     ADMIN_ROUTE, 
     BASKET_ROUTE, 
     BRAND_ROUTE, 
+    CABINET_ROUTER, 
     CATALOG_ROUTE, 
     CREATE_BRAND_ROUTE, 
     CREATE_DEVICE_ROUTE, 
@@ -10,6 +11,7 @@ import {
     DEVICE_ALL, 
     DEVICE_ROUTE, 
     FAVORITES_ROUTE, 
+    HISTORY_ROUTER, 
     LOGIN_ROUTE, 
     REGISTRATION_ROUTE, 
     SEARCH_ROUTE, 
@@ -30,6 +32,8 @@ import DeviceAll from "./components/DeviceList/DeviceAll";
 import Search from "./components/Search/Search";
 import Favorites from "./pages/Favorites/Favorites";
 import Order from "./components/Order/Order";
+import Cabinet from "./components/Cabinet/Cabinet";
+import History from "./components/Cabinet/History/History";
 
 export const authRoutes = [
     {
@@ -47,6 +51,14 @@ export const authRoutes = [
     {
         path: CREATE_BRAND_ROUTE,
         Component: createBrand
+    },
+    {
+        path: CABINET_ROUTER,
+        Component: Cabinet
+    },
+    {
+        path: HISTORY_ROUTER,
+        Component: History
     },
     
 ]

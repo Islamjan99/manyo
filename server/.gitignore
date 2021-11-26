@@ -1,0 +1,9 @@
+# dependincies 
+server/node_modules
+
+# See https://github.com/Islamjan99/manyo/ for nore abount ignoring files
+.idea 
+# dependincies  
+manyo/node_modules
+server/static
+server/avatar

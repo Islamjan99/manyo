@@ -1,5 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import JWTdecode from 'jwt-decode'
+import { authuser } from "../Http/UserAPI";
 
 export default class UserStore {
     constructor() {
@@ -7,7 +8,7 @@ export default class UserStore {
         this._user = {} 
         this._role = {} 
         this._users = []
-
+        this._usersId = []
 
         makeAutoObservable(this)
     }
@@ -30,7 +31,9 @@ export default class UserStore {
          }
          this._users = i
     }
-
+    getUsersId(userInfo) {
+        this._usersId = userInfo
+    }
     get isAuth() {
         return this._isAuth
     }
@@ -42,5 +45,8 @@ export default class UserStore {
     }
     get users() {
         return this._users
+    }
+    get userId() {
+        return this._usersId
     }
 }

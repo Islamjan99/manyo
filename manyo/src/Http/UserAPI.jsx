@@ -17,8 +17,12 @@ export const check = async () => {
     const {data} = await $authHost.get('api/user/auth' )
     return jwt_decode(data.token)
 }
-export const authuser = async () => {
-    const {data} = await $authHost.get('api/user/authuser' )
+export const authuser = async (id) => {
+    const {data} = await $authHost.get(`api/user//${id}`)
     return data
-    
+
+}
+export const addImg = async (img) => {
+    const {data} = await $authHost.put(`api/user/addImg`, img)
+    return data
 }

@@ -105,8 +105,13 @@ const Basket = observer(() => {
                                             <li onClick={() => Minus(produ)} className={style.coun} >-</li>
                                         </ul>
                                             
-                                    <div className={style.remove__btn}>
-                                        <button onClick={() => remove(produ.id)}>удалить</button>
+                                    <div className={style.remove__block}>
+                                        <button 
+                                            className={style.remove__btn} 
+                                            onClick={() => remove(produ.id)}
+                                        >
+                                            удалить
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +132,7 @@ const Basket = observer(() => {
                 <div className={style.orber__block}>
                     {
                         b !== undefined 
-                        ? <button onClick={order} className={style.btn__order}>Заказать</button> 
+                        ? <button onClick={order} className={style.btn__order}>Оформить</button> 
                         : <h2 className={style.bas__empty}>Корзина пуста</h2>
                     }
                 </div>

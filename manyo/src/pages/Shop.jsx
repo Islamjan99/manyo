@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import { Context } from "../index";
@@ -21,11 +21,36 @@ const Shop = observer(() => {
             device.setTotalCount(data.count)
         })
     }, [device, device.page, device.selectedType, device.selectedBrand,])
-    
-    
+    const [ name, setName ] = useState()
+    const [ phone, setPhone ] = useState()
+
+    const log = () => {
+        console.log(name, phone);
+    }
+
     return (
         <Container>
+            <p>Имя</p>
+            <input 
+                type="text"
+                onChange={e => 
+                setName(e.target.value)}
+                value={name}
+                placeholder="Имя" 
+            />
 
+            <p>Телефон</p>
+            <input 
+                type="text" 
+                onChange={e => 
+                setPhone(e.target.value)}
+                value={phone} 
+                placeholder="Телефон" 
+            />
+
+            <div>
+                <button className="mt-3" onClick={log}>Отправить </button>
+            </div>
         </Container>
     );
 });

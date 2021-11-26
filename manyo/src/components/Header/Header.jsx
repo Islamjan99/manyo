@@ -4,24 +4,33 @@ import NavBar from "../NavBar/NavBar";
 import { Link, useHistory} from 'react-router-dom'
 import { Context } from '../../index'
 import { observer } from 'mobx-react-lite'
-import { ADMIN_ROUTE, BASKET_ROUTE, FAVORITES_ROUTE, LOGIN_ROUTE, SEARCH_ROUTE } from '../../Utils/Consts'
+import { ADMIN_ROUTE, BASKET_ROUTE, CABINET_ROUTER, FAVORITES_ROUTE, LOGIN_ROUTE, SEARCH_ROUTE } from '../../Utils/Consts'
 import { fetchDevicees } from '../../Http/DeviceAPI';
+import { authuser } from '../../Http/UserAPI';
 
 
 
 const Header = observer(() => {
+    const history = useHistory()
     const { user } = useContext(Context)
     const { device } = useContext(Context)
+    const { FavoritesStore} = useContext(Context)
     const [ roles, setRoles ] = useState()
+    const [ userInfo, setUserInfo ] = useState()
 
-    const history = useHistory()
-
+    let prodId = []
+    
     useEffect(() => {
         if (localStorage.getItem('token') !== null) {
             user.setUsers()
-           }
-    })
-
+            authuser(user.users.id).then(data => setUserInfo(data))
+            setRoles(user.users.role)
+        }
+        if (localStorage.getItem('favorites') !== null) {
+            FavoritesStore.setFavorites()
+        }
+    }, [ user ])
+    
     useEffect(() => {
         fetchDevicees(device.selectedType.id, device.selectedBrand.id, device.page, 3).then(data => {
             device.setDevicees(data.rows)
@@ -38,11 +47,6 @@ const Header = observer(() => {
     const test = async () => {
         setRoles(user.users.role)
     }
-
-    const adminRoute = () => {
-        history.push(ADMIN_ROUTE)
-    }
-
     const basketRoute = () => {
         history.push(BASKET_ROUTE)
     }
@@ -56,7 +60,8 @@ const Header = observer(() => {
     
     useEffect(() => {
        if (localStorage.getItem('token') !== null) {
-          test()
+            test()
+            user.getUsersId(userInfo)
         }
         
         device.getLocalFavorites()
@@ -75,8 +80,8 @@ const Header = observer(() => {
                     {user.isAuth ? 
                             <ul className={style.right}>
                             <li>{roles === "ADMIN" 
-                                ? <button onClick={adminRoute} className={style.log_off}>Админ панель</button> 
-                                : <button className={style.log_off}>Личный кабинет</button> }
+                                ? <button onClick={() => history.push(ADMIN_ROUTE)} className={style.log_off}>Админ панель</button> 
+                                : <button onClick={() => history.push(CABINET_ROUTER)} className={style.log_off}>Личный кабинет</button> }
                             </li>
                             <li>
                                 <button 

@@ -8,13 +8,13 @@ import mainBackground from '../../imgContainer/img/9c5928f7eca80b5c5fbf8bc9b9b06
 const PORT = 5000;
 
 export default function Main() {
-    const [das, setDas] = useState([])
+    // const [das, setDas] = useState([])
 
-    const getData = async () =>  {
-     let {rows} = await axios(`http://localhost:5000/api/device`)
-     setDas(rows)
+    // const getData = async () =>  {
+    //  let {rows} = await axios(`http://localhost:5000/api/device`)
+    //  setDas(rows)
      
-    }
+    // }
 
     return (
         <div className={style.container} >

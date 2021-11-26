@@ -12,7 +12,12 @@
     margin-bottom: 1rem;
 }
 .h4{
+    display: flex;
+    justify-content: flex-end;
     margin-top: 1rem;
+}
+.personal__data {
+    width: 20rem;
 }
 .order__form {
     width: 32rem;
@@ -39,7 +44,24 @@
     border-bottom: 1px solid #808080 ;
 
 }
-
+.block__order {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.btn__order {
+    display: flex;
+    font-size: 2rem;
+    padding: 1rem;
+    background: none;
+    border: 1px solid #ffffff;
+    margin: 3rem 0 5rem 0;
+}
+.btn__order:hover {
+    border: 1px solid #83BD1A;
+    margin: 3rem 0 5rem 0;
+    padding: 1rem;
+}
 .inp__address {
     display: flex;
     flex-direction: column;
@@ -50,8 +72,19 @@
 }
 .p {
     display: flex;
+    align-items: center;
     margin: 1rem 0 1rem 0 ;
 }
 .i {
     margin: .5rem;
+}
+.pod {
+    width: 12rem;
+}
+.order__product {
+    margin-top: 5rem;
+}
+.order__info {
+    margin: 0 auto;
+    width: 50rem;
 }

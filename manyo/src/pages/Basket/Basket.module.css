@@ -63,21 +63,24 @@
     border: none;
 }
 .remove__btn {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
-.remove__btn button {
     background: none;
-    border: 1px solid;
+    border: none;
     display: flex;
     justify-content: flex-end;
     padding: .1rem .2rem;
     margin: .2rem 0;
+    border: 1px solid #ffffff;
+}
+.remove__btn:hover {
+    border: 1px solid #83BD1A;
+}
+.remove__block {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 .fil__price {
     margin: 2rem 2rem 0 0;
-    
 }
 .fil__one { 
     display: flex;

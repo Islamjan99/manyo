@@ -1,4 +1,4 @@
-export const ADMIN_ROUTE = '/admin'
+export const ADMIN_ROUTE = '/admin-create-device'
 export const LOGIN_ROUTE = '/login'
 export const REGISTRATION_ROUTE = '/registration'
 export const SHOP_ROUTE = '/'
@@ -13,4 +13,8 @@ export const CREATE_BRAND_ROUTE = '/create-brand'
 export const SEARCH_ROUTE = '/search'
 export const FAVORITES_ROUTE = '/Favorites'
 export const SENDING__AN_ORDER_ROUTER = '/sending-an-order'
-export const REACT_APP_API_URL='http://localhost:5000/'
+export const CABINET_ROUTER = '/personal-cabinet'
+export const HISTORY_ROUTER = '/purchase-history'
+export const REACT_APP_API_URL='http://localhost:5000/' 
+
+

@@ -9,6 +9,8 @@ const User = sequelize.define('user', {
     name: {type: DataTypes.STRING},
     lastName: {type: DataTypes.STRING},
     role: {type: DataTypes.STRING, defaultValue: "USER"},
+    img: {type: DataTypes.STRING, allowNull: true},
+    percent: {type: DataTypes.INTEGER,  defaultValue: 0, allowNull: false},
 })
 
 const Basket = sequelize.define('basket', {
