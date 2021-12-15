@@ -2,10 +2,15 @@ const {History} = require('../models/models')
 const ApiError = require('../error/ApiError');
 
 class HistoryConroller {
-    async create(req, res) {
-        const {userId, info, date, userName, userEmail, userAddress, userPhone} = req.body
-        const hist = await History.create({userId, info, date, userName, userEmail, userAddress, userPhone})
-        return res.json(hist)
+    async postHistory(req, res, next) {
+        try {
+
+            const {userId, info, date, userName, userEmail, userAddress, userPhone, OrderNumber} = req.body
+            const history = await History.create({userId, info, date, userName, userEmail, userAddress, userPhone, OrderNumber});
+            return res.json(history)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
     async getAll(req, res) {

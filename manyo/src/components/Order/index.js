@@ -31,8 +31,7 @@ const good = () => {
         if (text === 'Заказ') {
             await bot.sendMessage(groupIdGlobal, `${text}`, agreedOptions)
         }
-        
-        
+       
     })
 
     bot.on('callback_query', async msg => {
@@ -48,7 +47,6 @@ const good = () => {
             await bot.sendMessage(groupIdGlobal, `Заказ отменён! Пометил: ${userName}`)
         }
 
-        
     })
 }
 

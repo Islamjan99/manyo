@@ -9,7 +9,7 @@ const User = sequelize.define('user', {
     name: {type: DataTypes.STRING},
     lastName: {type: DataTypes.STRING},
     role: {type: DataTypes.STRING, defaultValue: "USER"},
-    img: {type: DataTypes.STRING, allowNull: true},
+    img: {type: DataTypes.STRING, allowNull: true, defaultValue: "empty"},
     percent: {type: DataTypes.INTEGER,  defaultValue: 0, allowNull: false},
 })
 
@@ -62,6 +62,7 @@ const History = sequelize.define('History', {
     userEmail: {type: DataTypes.STRING, allowNull: false },
     userAddress: {type: DataTypes.STRING, allowNull: false },
     userPhone: {type: DataTypes.INTEGER, allowNull: false },
+    OrderNumber: {type: DataTypes.INTEGER, allowNull: false },
 })
 
 User.hasOne(Basket)

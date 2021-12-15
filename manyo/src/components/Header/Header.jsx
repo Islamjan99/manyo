@@ -42,6 +42,7 @@ const Header = observer(() => {
         user.setUser({})
         user.setIsAuth(false)
         delete localStorage.token;
+        delete localStorage.image;
     }
         
     const test = async () => {

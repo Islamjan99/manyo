@@ -3,11 +3,12 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const uuid = require('uuid')
 const path = require('path');
-const {User, Basket} = require('../models/models')
+const {User, Basket} = require('../models/models');
+const fs = require("fs");
 
-const generateJwt = ( id, email, role, phone, name, lastName ) => {
+const generateJwt = ( id, email, role, phone, name, lastName, img, percent ) => {
     return jwt.sign(
-        { id, email, role, phone, name, lastName },
+        { id, email, role, phone, name, lastName, img, percent },
         process.env.SECRET_KEY,
         { expiresIn: '24h' }
     )
@@ -15,7 +16,7 @@ const generateJwt = ( id, email, role, phone, name, lastName ) => {
 
 class UserController {
     async registration(req, res, next) {
-        const { email, password, role, phone, name, lastName, percent} = req.body
+        const { email, password, role, phone, name, lastName, img, percent} = req.body
         if ( !email || !password || !phone || !name || !lastName) {
             return next(ApiError.badRequest('Некорректный email или password'))
         }
@@ -24,10 +25,10 @@ class UserController {
             return next(ApiError.badRequest('Пользователь с таким email уже существует'))
         }
         const hashPassword = await bcrypt.hash(password, 5)
-        const user = await User.create({name, lastName, email, role: 'USER', phone, password: hashPassword})
+        const user = await User.create({name, lastName, email, role: 'USER', phone, img: 'empty', percent, password: hashPassword})
         const basket = await Basket.create({userId: user.id})
-        const token = generateJwt(user.id, user.email, user.role, user.phone, user.name,  user.lastName, user.percent)
-        return res.json({token})
+        const token = generateJwt(user.id, user.email, user.role, user.phone, user.name,  user.lastName, user.img, user.percent )
+        return res.json({token, user})
     }
 
     async login(req, res, next) {
@@ -40,8 +41,8 @@ class UserController {
         if (!comparePassword) {
             return next(ApiError.internal('Указан неверный пароль'))
         }
-        const token = generateJwt(user.id, user.email, user.role, user.phone, user.name,  user.lastName,)
-        return res.json({token})
+        const token = generateJwt(user.id, user.email, user.role, user.phone, user.name,  user.lastName, user.img, user.percent)
+        return res.json({token, user})
     }
     async addImg(req, res, next) {
         try {
@@ -52,18 +53,52 @@ class UserController {
             const personaImg = await User.update(
                 {
                     img: fileName,
-                  },
-                  {
+                },
+                {
                     where: {
-                      email: email,
+                        email: email,
                     },
-                  }
+                }
                 )
-
-            return res.json(personaImg)
+                const user = await User.findOne(
+                    {
+                        where: {
+                            email: email,
+                        },
+                    },
+                )
+            return res.json(fileName)
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
+        
+    }
+    async deleteImg(req, res, next) {
+        try {
+            const {email} = req.body
+            const {imgName} = req.body
+            fs.unlink(`avatar/${imgName}`, function(err) {
+                if (err) {
+                    return console.error(err);
+                }
+             });
+            let fileName = 'empty'
+            const removeImg = await User.update(
+                {
+                    img: fileName,
+                },
+                {
+                    where: {
+                        email: email,
+                },
+                }
+            )
+
+            return res.json(fileName)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+        
     }
 
     async percent(req, res) {

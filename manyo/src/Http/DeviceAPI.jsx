@@ -41,9 +41,14 @@ export const fetchOneDevice = async (id) => {
     const { data } = await $host.get(`api/device/${id}`)
     return data
 }
-export const createHistoryOrder = async (order) => {
-    const { data } = await $host.post('api/his/histor', order)
-    return data
+export const createHistoryOrder = async (formData) => {
+    try {
+        const { data } = await $host.post('api/his/history', formData)
+        return data
+    } catch (e) {
+        console.log(e.message);
+    }
+    
 }
 
 export const getOrder = async () => {

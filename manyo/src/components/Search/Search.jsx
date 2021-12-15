@@ -100,6 +100,7 @@ export default function Search() {
             modalPanel()
         }
     }
+    
     const addFavorites = (device) => {
         data.push(device)
         addLocal()
@@ -219,7 +220,7 @@ export default function Search() {
                             <p>{produ.price} сом</p>
                             </div>
                         </div> 
-                            <button onClick={() => basMod(device)} key={produ.id} className={style.item_btn}>В корзину</button>
+                            <button onClick={() => basMod(produ)} key={produ.id} className={style.item_btn}>В корзину</button>
                     </div>                                                                                                     
             
                         )                                                                                                                                                                

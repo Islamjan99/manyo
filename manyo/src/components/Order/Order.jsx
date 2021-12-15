@@ -3,6 +3,7 @@ import { Context } from '../..'
 import style from './Order.module.css'
 import { createHistoryOrder, getOrder } from '../../Http/DeviceAPI'
 import axios from 'axios'
+import OrderModals from './OrderModals'
 
 export default function Order() {
     const { device } = useContext(Context)
@@ -10,8 +11,8 @@ export default function Order() {
     const [ agr, setAgr ] = useState(false)
     const [ check, setCheck ] = useState(false)
     const [ handleChange, setHandleChange ] = useState(false)
-    const [ j, setJ ] = useState([])
-
+    const [ smShow, setSmShow] = useState(false);
+    let orderNum = device.OrderHistory.length + 1;
     // Адрес
     const [ town, setTown ] = useState()
     const [ street, setStreet] = useState()
@@ -26,7 +27,6 @@ export default function Order() {
 
     let product = []
     let createAddress = {}
-    // createHistoryOrder
 
     const finalPrice = []
     const [ b, setB] = useState()
@@ -44,6 +44,7 @@ export default function Order() {
         AddDate = `День: ${date.getDate()} Месяц: ${month +=1} год: ${date.getFullYear()} Время: ${hours}:${minutes}`
         getOrder().then(data => device.setOrderHistory(data))
         finPrice()
+        prod()
     })
 
     const saveAddress = () => {
@@ -81,23 +82,47 @@ export default function Order() {
     const toggle = () => {
         setCheck(!check)
     }
+    const checks = () => {
+        if (name !== undefined) {
+            if (phone !== undefined) {
+                addOrger()
+            } else {
+                alert('Пожалуйста ваш сотовой номер')
+            }
+        } else {
+            alert('Пожалуйста введите ваше имя')
+        }
+    }
 
     const addOrger = () => {
         prod()
         saveAddress()
 
         const formData = new FormData()
-        formData.append('userId', user.users.id)
+        if (user.users.id !== null) {
+            formData.append('userId', user.users.id)
+        } else {
+            formData.append('userId', 0)
+        }
+        
         formData.append('info', JSON.stringify(product))
         formData.append('date',  AddDate)
         formData.append('userName', name)
-        formData.append('userPhone', phone)
         formData.append('userEmail', email)
-        
-        formData.append('userAddress', JSON.stringify(createAddress))
-        
-        // createHistoryOrder(formData)
+        if (agr !== false) {
+            formData.append('userAddress', JSON.stringify(createAddress))
+        } else {
+            formData.append('userAddress', 'Самовывоз')
+        }
+        formData.append('userPhone', phone)
+        formData.append('OrderNumber', orderNum)
 
+        for (var pair of formData.entries()) {
+            console.log(pair[0]+ ', ' +  pair[1]); 
+        }
+
+        createHistoryOrder(formData)
+        
         axios.post(`${process.env.REACT_APP_API_URL_POST}
                 %0A Заказ:  №: ${device.OrderHistory.length + 1}
                 %0A Имя: ${name}
@@ -115,8 +140,10 @@ export default function Order() {
                 `:  
                 'Самовывоз'
             }`)
-        console.log(formData);
+            setSmShow(true)
+            
     }
+
     
     return (
         <div className={style.container}>
@@ -131,7 +158,7 @@ export default function Order() {
                     <div className={style.order__form}>
                         
                         <div className={style.personal__data}>
-                            <p>Имя</p> 
+                            <p>Имя (обязательно)</p> 
                             <div className={style.order__inp}>
                                 <input 
                                     className={style.inp}  
@@ -141,7 +168,7 @@ export default function Order() {
                                 /> 
                             </div>
 
-                            <p>Номер телефона</p>
+                            <p>Номер телефона (обязательно)</p>
                             <div className={style.order__inp}>
                                 <input 
                                     className={style.inp} 
@@ -275,11 +302,11 @@ export default function Order() {
                             )}
                         </div>
                         <h4 className={style.h4}>Итоговая сумма заказа </h4>
-                        <h4>{b} KGS</h4>
+                        <h4 className={style.sum}>{b} KGS</h4>
                         {
                             check ? 
                                 <div className={style.block__order}>
-                                    <button onClick={() => addOrger()} className={style.btn__order}>заказать</button>
+                                    <button onClick={() => checks()} className={style.btn__order}>заказать</button>
                                 </div>
                             : 
                                 ""
@@ -287,6 +314,10 @@ export default function Order() {
                         
                     </div>
                 </div>
+            <OrderModals
+                smShow={smShow}
+                setSmShow={setSmShow}
+            />
         </div>
     )
 }

@@ -1,88 +1,85 @@
 import { observer } from 'mobx-react-lite'
 import React, { useContext, useState, useEffect } from 'react'
 import { Container, Image } from 'react-bootstrap'
-import { addImg, authuser } from '../../Http/UserAPI'
 import { Context } from '../../index'
 import avatars from '../../imgContainer/img/userAvatars.jpg'
 import style from "./Cabinet.module.css"
-import CabinetModals from './History/CabinetModals'
+import CreateAvatar from './CreateAvatar';
+import { HISTORY_ROUTER } from '../../Utils/Consts'
+import { useHistory } from 'react-router'
 
 const Cabinet = observer(() => {
+    const history = useHistory()
     const { user } = useContext(Context)
-    const [ smShow, setSmShow] = useState(false);
-    const [ addGood, setAddGood ] = useState(false)
+    const [ lgShow, setLgShow ] = useState(false);
     const [ check, setCheck ] = useState(false)
     const [ userName, setUserName] = useState(null)
-    const [ userImg, setUserImg] = useState(null)
+    const [ userImg, setUserImg] = useState(user.users.img)
     const [ email, setEmail] = useState(null)
 
-    const [file, setFile] = useState(null)
-    
-
-
     useEffect(() => {
-        if (localStorage.getItem('token') !== null) {
+        setTimeout(() => {
             checking()
-            setUserName(user.userId.name)
-            setUserImg(user.userId.img)
-            setEmail(user.userId.email)
-        }
-    }, [user])
+        }, 200);
+        ava()
+    }, [])
 
     const log = () => {
-        console.log(email);
+        console.log(user.users);
+        ava()
     }
     const checking = () => {
-        user.userId.img !== null ? setCheck(true) : setCheck(false)
-    }
-    const createImg = () => {
-        try {
-            // const formData = new FormData()
-            // formData.append('img', file)
-            // formData.append('email', email)
-            // addImg(formData)
-            setAddGood(true)
-            modalPanel()
-        } catch {
-            setAddGood(false)
-            modalPanel()
+        if (localStorage.getItem('token') !== null) {
+            setEmail(user.users.email)
+            setUserName(user.users.name)
+        } 
+        if (localStorage.getItem('image') !== null) {
+            setUserImg(localStorage.getItem('image'))
+        } else {
+            localStorage.setItem('image', user.users.img)
         }
         
-        
-
     }
-    const modalPanel = () => {
-        setTimeout(() => {
-            setSmShow(true)
-        }, 200);
+    const ava = () => { 
+        if (localStorage.getItem('image') !== null) {
+            setUserImg(localStorage.getItem('image'))
+        }
+        if (localStorage.getItem('image') !== 'empty') {
+            setCheck(true) 
+        }
     }
-    const selectFile = e => {
-        setFile(e.target.files[0])
+    const restart = () => { 
+        document.location.reload()
     }
+    const his = () => {
+        history.push(HISTORY_ROUTER)
+    }
+    
     return (
         <Container>
-            <CabinetModals
-                smShow={smShow}
-                setSmShow={setSmShow}
-                addGood={addGood}
-            />
-            <center><h2>Личный кабинет</h2></center>
-            <button onClick={() => user.getUsersId()}>log</button>
-            <button onClick={() => log()}>log2</button>
             <div>
-                <Image
-                    className={style.item_img} 
-                    style={{cursor: "pointer"}}
-                    width={250} height={250} 
-                    src={check ? process.env.REACT_APP_API_URL + userImg : avatars}
-                />
-                <input 
-                    className={style.add__img}
-                    type="file"
-                    onChange={selectFile}
-                 />
-                 <button onClick={() => createImg()}>createImg</button>
+                <center><h2>Личный кабинет</h2></center>
+                <button onClick={() => log()}>log</button>
+                <div className={style.block__avatar} >
+                    <Image
+                        className={style.avatar}
+                        width={300} height={300} 
+                        onClick={() => setLgShow(true)}
+                        src={check ? process.env.REACT_APP_API_URL + userImg : avatars}
+                    />
+                </div>
             </div>
+            <div>
+                <button onClick={() => his()}>История заказов</button>
+            </div>
+            <CreateAvatar  
+                lgShow={lgShow}
+                setLgShow={setLgShow}
+                userImg={userImg}
+                setUserImg={setUserImg}
+                restart={restart}
+                ava={ava}
+            />  
         </Container>
     )
 })
